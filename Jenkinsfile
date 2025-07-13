@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_BUILDKIT = '1'
+    }
+
     stages {
         stage('Clone') {
             steps {
@@ -17,15 +21,16 @@ pipeline {
         stage('Docker Build') {
             steps {
                 bat 'docker build -t demo-app -f Dockerfile demo'
-
             }
         }
 
         stage('Docker Run') {
             steps {
-                bat 'docker stop demo-app || echo "Not running"'
-                bat 'docker rm demo-app || echo "Not existing"'
-                bat 'docker run -d --name demo-app -p 8080:8080 demo-app'
+                // Stop and remove existing container if any
+                bat 'docker rm -f demo-container || echo "Container not running"'
+
+                // Run the new container from the built image
+                bat 'docker run -d -p 8080:8080 --name demo-container demo-app'
             }
         }
     }
