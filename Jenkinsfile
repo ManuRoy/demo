@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'demo\\mvnw.cmd clean package -DskipTests'
+                bat 'cd demo && mvn clean package -DskipTests'
             }
         }
 
@@ -22,8 +22,8 @@ pipeline {
 
         stage('Docker Run') {
             steps {
-                bat 'docker stop demo-app || echo not running'
-                bat 'docker rm demo-app || echo not existing'
+                bat 'docker stop demo-app || echo "Not running"'
+                bat 'docker rm demo-app || echo "Not existing"'
                 bat 'docker run -d --name demo-app -p 8080:8080 demo-app'
             }
         }
