@@ -30,7 +30,7 @@ pipeline {
                 bat 'docker rm -f demo-container || echo "Container not running"'
 
                 // Run the new container from the built image
-                bat 'docker run -d -p 8081:8080 --name demo-container demo-app'
+                bat 'docker run -d -p 8089:8089 --name demo-container demo-app'
             }
         }
     }
