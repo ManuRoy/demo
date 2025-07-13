@@ -10,13 +10,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat './mvnw clean package -DskipTests'
+                bat 'demo\\mvnw.cmd clean package -DskipTests'
             }
         }
 
         stage('Docker Build') {
             steps {
-                bat 'docker build -t demo-app .'
+                bat 'docker build -t demo-app demo'
             }
         }
 
